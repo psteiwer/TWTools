@@ -1,0 +1,430 @@
+<html>
+<head>
+<script type='text/javascript'>
+	haul=0;
+
+	function calculate() {
+		// First reset all values
+		resetValues();
+		
+		sp=parseInt(document.getElementById('spear').value);
+		sw=parseInt(document.getElementById('sword').value);
+		ax=parseInt(document.getElementById('axe').value);
+		acheck=document.getElementById('Acheck');
+		bcheck=document.getElementById('Bcheck');
+		ccheck=document.getElementById('Ccheck');
+		dcheck=document.getElementById('Dcheck');
+		
+		haul=getHaul(sp, sw, ax);
+		
+		sampletotal=0
+		if (acheck.checked) {
+			sampletotal=sampletotal+15000;
+		}
+		if (bcheck.checked) {
+			sampletotal=sampletotal+6000;
+		}
+		if (ccheck.checked) {
+			sampletotal=sampletotal+3000;
+		}
+		if (dcheck.checked) {
+			sampletotal=sampletotal+2000;
+		}
+		
+		apct=0
+		bpct=0
+		cpct=0
+		dpct=0
+		
+		if (acheck.checked) {
+			apct=15000/sampletotal;
+		}
+		if (bcheck.checked) {
+			bpct=6000/sampletotal;
+		}
+		if (ccheck.checked) {
+			cpct=3000/sampletotal;
+		}
+		if (dcheck.checked) {
+			dpct=2000/sampletotal;
+		}
+		
+		
+		if (acheck.checked) {
+			res=document.getElementById('Ares');
+			res.value=haul*apct;
+		}
+		if (bcheck.checked) {
+			res=document.getElementById('Bres');
+			res.value=haul*bpct;
+		}
+		if (ccheck.checked) {
+			res=document.getElementById('Cres');
+			res.value=haul*cpct;
+		}
+		if (dcheck.checked) {
+			res=document.getElementById('Dres');
+			res.value=haul*dpct;
+		}
+		
+		res=document.getElementById('Tres');
+		res.value=haul;
+		
+		updateTroops();
+		
+		updateSliderMax();
+		
+		updateSliderCalculated();
+	}
+	
+	function getHaul(sp, sw, ax) {
+		return (sp*25)+(sw*15)+(ax*10)
+	}
+	
+	function updateTroops() {
+		// Load haul values
+		Ares=document.getElementById('Ares').value;
+		Bres=document.getElementById('Bres').value;
+		Cres=document.getElementById('Cres').value;
+		Dres=document.getElementById('Dres').value;
+		
+		// Load selected scavenges
+		acheck=document.getElementById('Acheck');
+		bcheck=document.getElementById('Bcheck');
+		ccheck=document.getElementById('Ccheck');
+		dcheck=document.getElementById('Dcheck');
+		
+		// Load troops
+		sp=parseInt(document.getElementById('spear').value);
+		sw=parseInt(document.getElementById('sword').value);
+		ax=parseInt(document.getElementById('axe').value);
+		
+		for (var i=0;i<4;i++) {
+			switch (i) {
+				case 0:
+					target=Ares;
+					break;
+				case 1:
+					target=Bres;
+					break;
+				case 2:
+					target=Cres;
+					break;
+				default:
+					target=Dres;
+					break;
+			}
+			
+			spCount=0;
+			swCount=0;
+			axCount=0;
+			
+			console.log('target is: '+target);
+			
+			if ((sp*25)>target) {
+				spCount=Math.floor(target/25);
+				sp-=spCount;
+				target-=(Math.floor(target/25))*25;
+			} else {
+				spCount=sp;
+				target-=(sp*25);
+				sp=0;
+			}
+			
+			if ((sw*15)>target) {
+				swCount=Math.floor(target/15);
+				sw-=swCount;
+				target-=(Math.floor(target/15))*15;
+			} else {
+				swCount=sw;
+				target-=(sw*15);
+				sw=0;
+			}
+			
+			if ((ax*10)>target) {
+				axCount=Math.floor(target/10);
+				ax-=axCount;
+				target-=(Math.floor(target/10))*10;
+			} else {
+				axCount=ax;
+				target-=(ax*10);
+				ax=0;
+			}
+			
+			console.log('target now: '+target);
+			console.log('spear count: '+spCount);
+			console.log('spear remaining: '+sp);
+			console.log('sword count: '+swCount);
+			console.log('sword remaining: '+sw);
+			console.log('axe count: '+axCount);
+			console.log('axe remaining: '+ax);
+			
+			switch (i) {
+				case 0:
+					document.getElementById('Asp').innerHTML=spCount;
+					document.getElementById('Asw').innerHTML=swCount;
+					document.getElementById('Aax').innerHTML=axCount;
+					break;
+				case 1:
+					document.getElementById('Bsp').innerHTML=spCount;
+					document.getElementById('Bsw').innerHTML=swCount;
+					document.getElementById('Bax').innerHTML=axCount;
+					break;
+				case 2:
+					document.getElementById('Csp').innerHTML=spCount;
+					document.getElementById('Csw').innerHTML=swCount;
+					document.getElementById('Cax').innerHTML=axCount;
+					break;
+				default:
+					document.getElementById('Dsp').innerHTML=spCount;
+					document.getElementById('Dsw').innerHTML=swCount;
+					document.getElementById('Dax').innerHTML=axCount;
+					break;
+			}
+		}
+	}
+	
+	function resetValues() {
+		document.getElementById('Ares').value=0;
+		document.getElementById('Bres').value=0;
+		document.getElementById('Cres').value=0;
+		document.getElementById('Dres').value=0;
+	}
+	
+	function updateSliderCalculated() {
+		s1=document.getElementById('A');
+		s2=document.getElementById('B');
+		s3=document.getElementById('C');
+		s4=document.getElementById('D');
+		
+		s1.value=document.getElementById('Ares').value;
+		updateSlider('A');
+		s2.value=document.getElementById('Bres').value;
+		updateSlider('B');
+		s3.value=document.getElementById('Cres').value;
+		updateSlider('C');
+		s4.value=document.getElementById('Dres').value;
+		updateSlider('D');
+	}
+	
+	function updateSlider(id) {
+		slider = document.getElementById(id);
+		text = document.getElementById(id+"text");
+		text2 = document.getElementById(id+"text2");
+		text3 = document.getElementById(id+"text3");
+		text4 = document.getElementById(id+"text4");
+		offset = document.getElementById(id+"offset");
+		
+		text.value=slider.value;
+		offsetval=text.value*offset.value;
+		
+		//w33 speed
+		//text2.value=(0.00067216941728924568*offsetval) + 0.57552196750316397811
+		//w34 speed
+		text2.value=Math.pow(0.00000000000013228022*offsetval,3)-Math.pow(0.00000000881742108310*offsetval,2)+(0.00085566819598911770*offsetval)+0.61696393731426724116;
+		
+		text3.value=offsetval/(text2.value*60);
+		text4.value=text2.value*text3.value*60;
+		
+		updateSliderTotal();
+		updateSliderMax();
+	}
+	
+	function updateSliderTotal() {
+		m1=document.getElementById('Atext3');
+		m2=document.getElementById('Btext3');
+		m3=document.getElementById('Ctext3');
+		m4=document.getElementById('Dtext3');
+		m5=document.getElementById('Ttext3');
+		
+		total=0;
+		if (parseFloat(m1.value)) {
+			total=total+parseFloat(m1.value);
+		}
+		if (parseFloat(m2.value)) {
+			total=total+parseFloat(m2.value);
+		}
+		if (parseFloat(m3.value)) {
+			total=total+parseFloat(m3.value);
+		}
+		if (parseFloat(m4.value)) {
+			total=total+parseFloat(m4.value);
+		}
+		
+		m5.value=total;
+		
+		
+		t1=document.getElementById('Atext4');
+		t2=document.getElementById('Btext4');
+		t3=document.getElementById('Ctext4');
+		t4=document.getElementById('Dtext4');
+		t5=document.getElementById('Ttext4');
+		
+		total=0;
+		if (parseFloat(t1.value)) {
+			total=total+parseFloat(t1.value);
+		}
+		if (parseFloat(t2.value)) {
+			total=total+parseFloat(t2.value);
+		}
+		if (parseFloat(t3.value)) {
+			total=total+parseFloat(t3.value);
+		}
+		if (parseFloat(t4.value)) {
+			total=total+parseFloat(t4.value);
+		}
+		
+		t5.value=total;
+		
+	}
+	
+	function updateSliderMax() {
+		totalhaul=haul;
+		
+		s1=document.getElementById('A');
+		s2=document.getElementById('B');
+		s3=document.getElementById('C');
+		s4=document.getElementById('D');
+		
+		totalhaul=totalhaul-s1.value-s2.value-s3.value-s4.value;
+		
+		s1.max=parseInt(s1.value)+totalhaul;
+		s2.max=parseInt(s2.value)+totalhaul;
+		s3.max=parseInt(s3.value)+totalhaul;
+		s4.max=parseInt(s4.value)+totalhaul;
+	}
+	
+</script>
+</head>
+<body>
+	<div id='topnav'>
+		<a href="ScavengeCalculator.html">Scavenge</a>
+	</div>
+	<table>
+		<tr>
+			<th></th>
+			<th>Spear</th>
+			<th>Sword</th>
+			<th>Axe</th>
+		</tr>
+		<tr>
+			<td>Available Troops</td>
+			<td><input id='spear' type='text' maxlength='6' size='6' value='0'></td>
+			<td><input id='sword' type='text' maxlength='6' size='6' value='0'></td>
+			<td><input id='axe' type='text' maxlength='6' size='6' value='0'></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td colspan='3'>
+				A: <input type="checkbox" id="Acheck" checked>
+				B: <input type="checkbox" id="Bcheck" checked>
+				C: <input type="checkbox" id="Ccheck" checked>
+				D: <input type="checkbox" id="Dcheck" checked>
+			</td>
+		</tr>
+		<tr>
+			<td colspan='4' align='right'><button id='calculate' onclick='calculate();'>Calculate</button></td>
+		</tr>
+		<!--tr>
+			<td><input id='spearres' type='text' maxlength='6' size='6' readonly></td>
+			<td><input id='swordres' type='text' maxlength='6' size='6' readonly></td>
+			<td><input id='axeres' type='text' maxlength='6' size='6' readonly></td>
+		</td-->
+	</table>
+	
+	<table>
+		<tr>
+			<th>A</th>
+			<th>B</th>
+			<th>C</th>
+			<th>D</th>
+			<th>Total</th>
+		</tr>
+		<tr>
+			<td><input type='text' id='Ares' readonly/></td>
+			<td><input type='text' id='Bres' readonly/></td>
+			<td><input type='text' id='Cres' readonly/></td>
+			<td><input type='text' id='Dres' readonly/></td>
+			<td><input type='text' id='Tres' readonly/></td>
+		</tr>
+	</table>
+	
+	<table>
+		<tr>
+			<th></th>
+			<th>Spear</th>
+			<th>Sword</th>
+			<th>Axe</th>
+		</tr>
+		<tr>
+			<td>A</td>
+			<td id="Asp"></td>
+			<td id="Asw"></td>
+			<td id="Aax"></td>
+		</tr>
+		<tr>
+			<td>B</td>
+			<td id="Bsp"></td>
+			<td id="Bsw"></td>
+			<td id="Bax"></td>
+		</tr>
+		<tr>
+			<td>C</td>
+			<td id="Csp"></td>
+			<td id="Csw"></td>
+			<td id="Cax"></td>
+		</tr>
+		<tr>
+			<td>D</td>
+			<td id="Dsp"></td>
+			<td id="Dsw"></td>
+			<td id="Dax"></td>
+		</tr>
+		
+	</table>
+	
+	<table>
+		<tr>
+			<th colspan='2'>Resources</th>
+			<th>Hours</th>
+			<th>R/Min</th>
+			<th>Total</th>
+		</tr>
+		<tr>
+			<td><input type="range" min="0" max="0" value="0" class="slider" id="A" onchange="updateSlider(this.id);"><input type='hidden' id='Aoffset' value='.1'/></td>
+			<td><input id="Atext" type="text" size="5"/></td>
+			<td><input id="Atext2" type="text" size="5"/></td>
+			<td><input id="Atext3" type="text" size="5"/></td>
+			<td><input id="Atext4" type="text" size="5"/></td>
+		</tr>
+		<tr>
+			<td><input type="range" min="0" max="0" value="0" class="slider" id="B" onchange="updateSlider(this.id);"><input type='hidden' id='Boffset' value='.25'/></td>
+			<td><input id="Btext" type="text" size="5"/></td>
+			<td><input id="Btext2" type="text" size="5"/></td>
+			<td><input id="Btext3" type="text" size="5"/></td>
+			<td><input id="Btext4" type="text" size="5"/></td>
+		</tr>
+		<tr>
+			<td><input type="range" min="0" max="0" value="0" class="slider" id="C" onchange="updateSlider(this.id);"><input type='hidden' id='Coffset' value='.5'/></td>
+			<td><input id="Ctext" type="text" size="5"/></td>
+			<td><input id="Ctext2" type="text" size="5"/></td>
+			<td><input id="Ctext3" type="text" size="5"/></td>
+			<td><input id="Ctext4" type="text" size="5"/></td>
+		</tr>
+		<tr>
+			<td><input type="range" min="0" max="0" value="0" class="slider" id="D" onchange="updateSlider(this.id);"><input type='hidden' id='Doffset' value='.75'/></td>
+			<td><input id="Dtext" type="text" size="5"/></td>
+			<td><input id="Dtext2" type="text" size="5"/></td>
+			<td><input id="Dtext3" type="text" size="5"/></td>
+			<td><input id="Dtext4" type="text" size="5"/></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td><input id="Ttext2" type="text" size="5"/></td>
+			<td><input id="Ttext3" type="text" size="5"/></td>
+			<td><input id="Ttext4" type="text" size="5"/></td>
+		</tr>
+	</table>
+</body>
+</html>
