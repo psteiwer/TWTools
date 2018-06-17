@@ -1,187 +1,65 @@
 <html>
 <head>
+<script src="../js/ScavengingCalculator.js"></script>
 <script type='text/javascript'>
-	haul=0;
-
-	function calculate() {
-		// First reset all values
+	function run() {
 		resetValues();
 		
+		// Get the active missions
+		a=document.getElementById('Acheck').checked;
+		b=document.getElementById('Bcheck').checked;
+		c=document.getElementById('Ccheck').checked;
+		d=document.getElementById('Dcheck').checked;
+		
+		// Get troop counts
 		sp=parseInt(document.getElementById('spear').value);
 		sw=parseInt(document.getElementById('sword').value);
 		ax=parseInt(document.getElementById('axe').value);
-		acheck=document.getElementById('Acheck');
-		bcheck=document.getElementById('Bcheck');
-		ccheck=document.getElementById('Ccheck');
-		dcheck=document.getElementById('Dcheck');
 		
-		haul=getHaul(sp, sw, ax);
+		// Call calculate()
+		// TODO - Handle hc
+		res=calculate(a,b,c,d,sp,sw,ax,0)
 		
-		sampletotal=0
-		if (acheck.checked) {
-			sampletotal=sampletotal+15000;
-		}
-		if (bcheck.checked) {
-			sampletotal=sampletotal+6000;
-		}
-		if (ccheck.checked) {
-			sampletotal=sampletotal+3000;
-		}
-		if (dcheck.checked) {
-			sampletotal=sampletotal+2000;
-		}
+		updateTroops(res);
 		
-		apct=0
-		bpct=0
-		cpct=0
-		dpct=0
-		
-		if (acheck.checked) {
-			apct=15000/sampletotal;
-		}
-		if (bcheck.checked) {
-			bpct=6000/sampletotal;
-		}
-		if (ccheck.checked) {
-			cpct=3000/sampletotal;
-		}
-		if (dcheck.checked) {
-			dpct=2000/sampletotal;
-		}
-		
-		
-		if (acheck.checked) {
-			res=document.getElementById('Ares');
-			res.value=haul*apct;
-		}
-		if (bcheck.checked) {
-			res=document.getElementById('Bres');
-			res.value=haul*bpct;
-		}
-		if (ccheck.checked) {
-			res=document.getElementById('Cres');
-			res.value=haul*cpct;
-		}
-		if (dcheck.checked) {
-			res=document.getElementById('Dres');
-			res.value=haul*dpct;
-		}
-		
-		res=document.getElementById('Tres');
-		res.value=haul;
-		
-		updateTroops();
+		updateHauls(res);
 		
 		updateSliderMax();
 		
 		updateSliderCalculated();
 	}
 	
-	function getHaul(sp, sw, ax) {
-		return (sp*25)+(sw*15)+(ax*10)
+	function updateTroops(troops) {
+		document.getElementById('Asp').innerHTML=troops[0][0];
+		document.getElementById('Asw').innerHTML=troops[0][1];
+		document.getElementById('Aax').innerHTML=troops[0][2];
+		document.getElementById('Bsp').innerHTML=troops[1][0];
+		document.getElementById('Bsw').innerHTML=troops[1][1];
+		document.getElementById('Bax').innerHTML=troops[1][2];
+		document.getElementById('Csp').innerHTML=troops[2][0];
+		document.getElementById('Csw').innerHTML=troops[2][1];
+		document.getElementById('Cax').innerHTML=troops[2][2];
+		document.getElementById('Dsp').innerHTML=troops[3][0];
+		document.getElementById('Dsw').innerHTML=troops[3][1];
+		document.getElementById('Dax').innerHTML=troops[3][2];
 	}
 	
-	function updateTroops() {
-		// Load haul values
-		Ares=document.getElementById('Ares').value;
-		Bres=document.getElementById('Bres').value;
-		Cres=document.getElementById('Cres').value;
-		Dres=document.getElementById('Dres').value;
-		
-		// Load selected scavenges
-		acheck=document.getElementById('Acheck');
-		bcheck=document.getElementById('Bcheck');
-		ccheck=document.getElementById('Ccheck');
-		dcheck=document.getElementById('Dcheck');
-		
-		// Load troops
-		sp=parseInt(document.getElementById('spear').value);
-		sw=parseInt(document.getElementById('sword').value);
-		ax=parseInt(document.getElementById('axe').value);
-		
-		for (var i=0;i<4;i++) {
-			switch (i) {
-				case 0:
-					target=Ares;
-					break;
-				case 1:
-					target=Bres;
-					break;
-				case 2:
-					target=Cres;
-					break;
-				default:
-					target=Dres;
-					break;
-			}
-			
-			spCount=0;
-			swCount=0;
-			axCount=0;
-			
-			console.log('target is: '+target);
-			
-			if ((sp*25)>target) {
-				spCount=Math.floor(target/25);
-				sp-=spCount;
-				target-=(Math.floor(target/25))*25;
-			} else {
-				spCount=sp;
-				target-=(sp*25);
-				sp=0;
-			}
-			
-			if ((sw*15)>target) {
-				swCount=Math.floor(target/15);
-				sw-=swCount;
-				target-=(Math.floor(target/15))*15;
-			} else {
-				swCount=sw;
-				target-=(sw*15);
-				sw=0;
-			}
-			
-			if ((ax*10)>target) {
-				axCount=Math.floor(target/10);
-				ax-=axCount;
-				target-=(Math.floor(target/10))*10;
-			} else {
-				axCount=ax;
-				target-=(ax*10);
-				ax=0;
-			}
-			
-			console.log('target now: '+target);
-			console.log('spear count: '+spCount);
-			console.log('spear remaining: '+sp);
-			console.log('sword count: '+swCount);
-			console.log('sword remaining: '+sw);
-			console.log('axe count: '+axCount);
-			console.log('axe remaining: '+ax);
-			
-			switch (i) {
-				case 0:
-					document.getElementById('Asp').innerHTML=spCount;
-					document.getElementById('Asw').innerHTML=swCount;
-					document.getElementById('Aax').innerHTML=axCount;
-					break;
-				case 1:
-					document.getElementById('Bsp').innerHTML=spCount;
-					document.getElementById('Bsw').innerHTML=swCount;
-					document.getElementById('Bax').innerHTML=axCount;
-					break;
-				case 2:
-					document.getElementById('Csp').innerHTML=spCount;
-					document.getElementById('Csw').innerHTML=swCount;
-					document.getElementById('Cax').innerHTML=axCount;
-					break;
-				default:
-					document.getElementById('Dsp').innerHTML=spCount;
-					document.getElementById('Dsw').innerHTML=swCount;
-					document.getElementById('Dax').innerHTML=axCount;
-					break;
-			}
-		}
+	function updateHauls(troops) {
+		// Get working now, clean up later
+		total=0;
+		temp=troops[0][0]*25+troops[0][1]*15+troops[0][2]*10;
+		document.getElementById('Ares').value=temp;
+		total+=temp;
+		temp=troops[1][0]*25+troops[1][1]*15+troops[1][2]*10
+		document.getElementById('Bres').value=temp;
+		total+=temp;
+		temp=troops[2][0]*25+troops[2][1]*15+troops[2][2]*10;
+		document.getElementById('Cres').value=temp;
+		total+=temp;
+		temp=troops[3][0]*25+troops[3][1]*15+troops[3][2]*10
+		document.getElementById('Dres').value=temp;
+		total+=temp;
+		document.getElementById('Tres').value=total;
 	}
 	
 	function resetValues() {
@@ -323,7 +201,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan='4' align='right'><button id='calculate' onclick='calculate();'>Calculate</button></td>
+			<td colspan='4' align='right'><button id='calculate' onclick='run();'>Calculate</button></td>
 		</tr>
 		<!--tr>
 			<td><input id='spearres' type='text' maxlength='6' size='6' readonly></td>
