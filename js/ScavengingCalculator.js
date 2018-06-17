@@ -1,51 +1,53 @@
-function calculate(a, b, c, d, sp, sw, ax, hc) {
-	console.log("a: "+a);
-	console.log("b: "+b);
-	console.log("c: "+c);
-	console.log("d: "+d);
-	haul=getHaul(sp, sw, ax, hc);
-	console.log("haul: "+haul);
-	hauls=calculateHauls(haul,a,b,c,d);
-	console.log("hauls: "+hauls);
-	missionA=[0,0,0,0];
-	missionB=[0,0,0,0];
-	missionC=[0,0,0,0];
-	missionD=[0,0,0,0];
-	
-	if (a) {
-		missionA = calculateTroops(hauls[0],sp,sw,ax,hc)
-		sp-=missionA[0];
-		sw-=missionA[1];
-		ax-=missionA[2];
-		hc-=missionA[3];
+module.exports = {
+	function calculate(a, b, c, d, sp, sw, ax, hc) {
+		console.log("a: "+a);
+		console.log("b: "+b);
+		console.log("c: "+c);
+		console.log("d: "+d);
+		haul=getHaul(sp, sw, ax, hc);
+		console.log("haul: "+haul);
+		hauls=calculateHauls(haul,a,b,c,d);
+		console.log("hauls: "+hauls);
+		missionA=[0,0,0,0];
+		missionB=[0,0,0,0];
+		missionC=[0,0,0,0];
+		missionD=[0,0,0,0];
+		
+		if (a) {
+			missionA = calculateTroops(hauls[0],sp,sw,ax,hc)
+			sp-=missionA[0];
+			sw-=missionA[1];
+			ax-=missionA[2];
+			hc-=missionA[3];
+		}
+		
+		if (b) {
+			missionB = calculateTroops(hauls[1],sp,sw,ax,hc)
+			sp-=missionB[0];
+			sw-=missionB[1];
+			ax-=missionB[2];
+			hc-=missionB[3];
+		}
+		
+		if (c) {
+			missionC = calculateTroops(hauls[2],sp,sw,ax,hc)
+			sp-=missionC[0];
+			sw-=missionC[1];
+			ax-=missionC[2];
+			hc-=missionC[3];
+		}
+		
+		if (d) {
+			missionD = calculateTroops(hauls[3],sp,sw,ax,hc)
+			sp-=missionD[0];
+			sw-=missionD[1];
+			ax-=missionD[2];
+			hc-=missionD[3];
+		}
+		
+		return [missionA,missionB,missionC,missionD];
 	}
-	
-	if (b) {
-		missionB = calculateTroops(hauls[1],sp,sw,ax,hc)
-		sp-=missionB[0];
-		sw-=missionB[1];
-		ax-=missionB[2];
-		hc-=missionB[3];
-	}
-	
-	if (c) {
-		missionC = calculateTroops(hauls[2],sp,sw,ax,hc)
-		sp-=missionC[0];
-		sw-=missionC[1];
-		ax-=missionC[2];
-		hc-=missionC[3];
-	}
-	
-	if (d) {
-		missionD = calculateTroops(hauls[3],sp,sw,ax,hc)
-		sp-=missionD[0];
-		sw-=missionD[1];
-		ax-=missionD[2];
-		hc-=missionD[3];
-	}
-	
-	return [missionA,missionB,missionC,missionD];
-}
+};
 
 function calculateHauls(haul,a,b,c,d) {
 	sampletotal=0

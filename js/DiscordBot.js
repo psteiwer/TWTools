@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./DiscordBot.json");
+var utils = require("./ScavengingCalculator.js");
 
 
 client.on("ready", () => {
@@ -22,7 +23,7 @@ client.on("message", (message) => {
 		missions=msg[0].split("");
 		troops=msg[1].split("/");
 		console.log(missions);
-		res=calculate(msg[0].includes('a'),msg[0].includes('b'),msg[0].includes('c'),msg[0].includes('d'),troops[0],troops[1],troops[2],troops[3]);
+		res=utils.calculate(msg[0].includes('a'),msg[0].includes('b'),msg[0].includes('c'),msg[0].includes('d'),troops[0],troops[1],troops[2],troops[3]);
 		console.log(res);
 		message.channel.send(res);
 	} else if (msg=='!help') {
