@@ -1,5 +1,5 @@
 module.exports = {
-	function calculate(a, b, c, d, sp, sw, ax, hc) {
+	calculate: function (a, b, c, d, sp, sw, ax, hc) {
 		console.log("a: "+a);
 		console.log("b: "+b);
 		console.log("c: "+c);
