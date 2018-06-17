@@ -25,8 +25,13 @@ client.on("message", (message) => {
 		res=calculate(msg[0].includes('a'),msg[0].includes('b'),msg[0].includes('c'),msg[0].includes('d'),troops[0],troops[1],troops[2],troops[3]);
 		console.log(res);
 		message.channel.send(res);
+	} else if (msg=='!help') {
+		message.channel.send("Expected format is 'abcd 0/0/0/0'." +
+				" 'abcd' is any combination of missions that you would like to scavenge with." +
+				" '0/0/0/0' are the number of troops you would like to send in total." +
+				" Troop order is spear/sword/axe/heavy cavalry.");
 	} else {
-		message.channel.send("Sorry, wrong format. Please use 'abcd 0/0/0/0'");
+		message.channel.send("Sorry, wrong format. Type !help for more info.");
 	}
     
 });
