@@ -32,7 +32,7 @@ client.on("message", (message) => {
 				"\n'0/0/0/0' are the number of troops you would like to send in total." +
 				"\nTroop order is spear/sword/axe/heavy cavalry.");
 	} else {
-		message.channel.send("Sorry, wrong format. Type !help for more info.");
+		message.channel.send("Sorry, wrong format. Type !help for format info.");
 	}
     
 });
