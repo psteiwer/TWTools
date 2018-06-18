@@ -28,9 +28,9 @@ client.on("message", (message) => {
 		message.channel.send(res);
 	} else if (msg=='!help') {
 		message.channel.send("Expected format is 'abcd 0/0/0/0'." +
-				" 'abcd' is any combination of missions that you would like to scavenge with." +
-				" '0/0/0/0' are the number of troops you would like to send in total." +
-				" Troop order is spear/sword/axe/heavy cavalry.");
+				"\n'abcd' is any combination of missions that you would like to scavenge with." +
+				"\n'0/0/0/0' are the number of troops you would like to send in total." +
+				"\nTroop order is spear/sword/axe/heavy cavalry.");
 	} else {
 		message.channel.send("Sorry, wrong format. Type !help for more info.");
 	}
