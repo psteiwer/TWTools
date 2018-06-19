@@ -23,7 +23,7 @@ client.on("message", (message) => {
 		missions=msg[0].split("");
 		troops=msg[1].split("/");
 		console.log(missions);
-		res=utils.calcExternal(msg[0].includes('a'),msg[0].includes('b'),msg[0].includes('c'),msg[0].includes('d'),troops[0],troops[1],troops[2],troops[3]);
+		res=utils.calcExternal(msg[0].toLowerCase().includes('a'),msg[0].toLowerCase().includes('b'),msg[0].toLowerCase().includes('c'),msg[0].toLowerCase().includes('d'),troops[0],troops[1],troops[2],troops[3]);
 		console.log(res);
 		message.channel.send(res);
 	} else if (msg=='!help') {
