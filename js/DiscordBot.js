@@ -5,10 +5,13 @@ var utils = require("./ScavengingCalculator.js");
 
 function logMessage(message) {
 	// Writes useful info about the message to the output device
+	date = new Date();
+	console.log(date.toString());
 	console.log("User: "+message.author.username+" ("+message.author.id+")");
 	console.log("Sever: "+message.channel.guild.name+" ("+message.channel.guild.id+")");
 	console.log("Channel: "+message.channel.name);
 	console.log("Message: "+message.content);
+	console.log("");
 }
 
 client.on("ready", () => {
