@@ -6,14 +6,9 @@ module.exports = {
 };
 
 function calculate(a, b, c, d, sp, sw, ax, hc) {
-	console.log("a: "+a);
-	console.log("b: "+b);
-	console.log("c: "+c);
-	console.log("d: "+d);
 	haul=getHaul(sp, sw, ax, hc);
-	console.log("haul: "+haul);
 	hauls=calculateHauls(haul,a,b,c,d);
-	console.log("hauls: "+hauls);
+	
 	missionA=[0,0,0,0];
 	missionB=[0,0,0,0];
 	missionC=[0,0,0,0];
