@@ -22,8 +22,8 @@ function logMessageOut(message) {
 }
 
 function sendMessage(message,text) {
-	logMessageOut(text);
 	message.channel.send(text);
+	logMessageOut(text);
 }
 
 client.on("ready", () => {
