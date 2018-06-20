@@ -14,6 +14,13 @@ function logMessageIn(message) {
 	console.log("");
 }
 
+function logMessageOut(message) {
+	date = new Date();
+	console.log(date.toString());
+	console.log("Sent: "+message);
+	console.log("");
+}
+
 client.on("ready", () => {
   console.log("Ready");
 });
