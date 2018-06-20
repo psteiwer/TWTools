@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const config = require("./DiscordBot.json");
 var utils = require("./ScavengingCalculator.js");
 
-function logMessage(message) {
+function logMessageIn(message) {
 	// Writes useful info about the message to the output device
 	date = new Date();
 	console.log(date.toString());
@@ -25,7 +25,7 @@ client.on("message", (message) => {
 		return;
 	}
 	
-	logMessage(message);
+	logMessageIn(message);
 	
 	var expr = /(A|B|C|D){1,4}\s\d*[/]\d*[/]\d*[/]\d*/i;
 	if (msg.match(expr)) {
