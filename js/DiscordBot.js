@@ -46,7 +46,13 @@ client.on("message", (message) => {
 		missions=msg[0].split("");
 		troops=msg[1].split("/");
 		res=utils.calcExternal(msg[0].toLowerCase().includes('a'),msg[0].toLowerCase().includes('b'),msg[0].toLowerCase().includes('c'),msg[0].toLowerCase().includes('d'),troops[0],troops[1],troops[2],troops[3]);
-		sendMessage(message,res);
+
+		outMsg = "Mission A: "+res[0]+
+			"\nMission B: "+res[1]+
+			"\nMission C: "+res[2]+
+			"\nMission D: "+res[3]
+		
+		sendMessage(message,outMsg);
 	} else if (msg=='!help') {
 		messageText = "Expected format is 'abcd 0/0/0/0'." +
 				"\n'abcd' is any combination of missions that you would like to scavenge with." +
